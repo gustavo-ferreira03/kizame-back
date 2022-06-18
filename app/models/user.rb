@@ -5,15 +5,8 @@ class User < ApplicationRecord
     has_one :modality, through: :user_modality
 
     has_secure_password
-    validates :name, :last_name, :email, presence: true
+    validates :name, :last_name, :email, :password, :password_confirmation, presence: true
     validates :email, uniqueness: true
-    validates :password, confirmation: true
-    validates :password_confirmation, presence: true
 
-    enum role: {
-        "administrator" = 0,
-        "teacher" = 1,
-        "student" = 2
-    }
-
+    enum role: ["student", "instructor", "admin"]
 end

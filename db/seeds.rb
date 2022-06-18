@@ -18,7 +18,6 @@ def create_classroom(args)
     classroom = Classroom.create(args)
 end
 
-User.delete_all
 puts "Creating Users"
 create_user(
     name: "Gustavo",
@@ -30,12 +29,10 @@ create_user(
     role: 1
 )
 
-Modality.delete_all
 puts "Creating capacities"
 modalities_list = ["Karatê", "jiu-jitsu", "krav maga", "zumba", "muay thai", "boxe"]
 modalities_list.each { |t| create_modality(name: t) }
 
-Classroom.delete_all
 puts "Creating classrooms"
 create_classroom(
     name: "turma do gustavao"
