@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::API
 
   def verify_authenticated
-    render json: {message: "Permissao Negada, faça login primeiro"}, status: 401 and return unless current_user.present?
+    render json: {message: "Permissão negada, faça login primeiro"}, status: 401 and return unless current_user.present?
+  end
+
+  def verify_admin
+    render json: {message: "Permissao Negada, faça login primeiro"}, status: 401 and return unless current_user.admin?
   end
 
   def current_user
