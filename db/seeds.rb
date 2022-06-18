@@ -6,17 +6,37 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-def create_user(args)
-    user = User.create(args)
-end
+User.delete_all
+Modality.delete_all
+Classroom.delete_all
 
 def create_modality(args)
     modality = Modality.create(args)
 end
 
-def create_classroom(args)
-    classroom = Classroom.create(args)
+def create_user(args)
+    user = User.new(args)
+    modality = user.build_user_modality(modality_id: Modality.all.sample.id)
+
+    User.transaction do
+        user.save!
+        modality.save!
+    end
 end
+
+def create_classroom(args)
+    classroom = Classroom.new(args)
+    modality = classroom.build_classroom_modality(modality_id: Modality.all.sample.id)
+
+    Modality.transaction do
+        classroom.save!
+        modality.save!
+    end
+end
+
+puts "Creating modalities"
+modalities_list = ["Karatê", "jiu-jitsu", "krav maga", "zumba", "muay thai", "boxe"]
+modalities_list.each { |t| create_modality(name: t) }
 
 puts "Creating Users"
 create_user(
@@ -29,11 +49,44 @@ create_user(
     role: 1
 )
 
-puts "Creating capacities"
-modalities_list = ["Karatê", "jiu-jitsu", "krav maga", "zumba", "muay thai", "boxe"]
-modalities_list.each { |t| create_modality(name: t) }
+create_user(
+    name: "Gustavo",
+    last_name: "Cosme",
+    email: "gustavo.ferreira@admin.com.br",
+    password: "123",
+    password_confirmation: "123",
+    profile_picture_link: "teste",
+    role: 2
+)
+
+puts "  Creating students"
+5.times do
+    create_user(
+        name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
+        email: Faker::Internet.email,
+        password: "123",
+        password_confirmation: "123",
+        profile_picture_link: "teste",
+        role: 0
+    )
+end
+
+puts "  Creating instructors"
+5.times do
+    create_user(
+        name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
+        email: Faker::Internet.email,
+        password: "123",
+        password_confirmation: "123",
+        profile_picture_link: "teste",
+        role: 1
+    )
+end
 
 puts "Creating classrooms"
-create_classroom(
-    name: "turma do gustavao"
-)
+10.times do
+    instructor = User.where(role: "instructor").sample
+    instructor.classrooms.create(name: "Turma #{rand(0..300)}")
+end
