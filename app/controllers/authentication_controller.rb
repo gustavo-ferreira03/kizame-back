@@ -12,7 +12,8 @@ class AuthenticationController < ApplicationController
 
   def signup
     @user = User.new(signup_user_params)
-    @modality = @user.user_modality.build(modality_id: modality_id)
+    @user.role = 0
+    @modality = @user.build_user_modality(modality_id: modality_id)
 
     User.transaction do
       @user.save!
@@ -25,7 +26,7 @@ class AuthenticationController < ApplicationController
 
   private
     def signup_user_params
-      params.require(:user).permit(:name, :last_name, :email, :password, :password_confirmation, :profile_picture)
+      params.require(:user).permit(:name, :last_name, :email, :password, :password_confirmation, :profile_picture_link)
     end
 
     def modality_id
