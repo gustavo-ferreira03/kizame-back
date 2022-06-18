@@ -11,7 +11,7 @@ def create_user(args)
 end
 
 def create_modality(args)
-    capacity = Capacity.create(args)
+    modality = Modality.create(args)
 end
 
 def create_classroom(args)
@@ -26,18 +26,17 @@ create_user(
     email: "gustavo.ferreira@injunior.com.br",
     password: "123",
     password_confirmation: "123",
-    profile_picture_link: "teste"
+    profile_picture_link: "teste",
     role: 1
 )
 
-Capacity.delete_all
+Modality.delete_all
 puts "Creating capacities"
-modalities = ["Karatê", "jiu-jitsu", "krav maga", "zumba", "muay thai", "boxe")]
-modalities.each do |t|
-    create_modality(name: t)
-end
+modalities_list = ["Karatê", "jiu-jitsu", "krav maga", "zumba", "muay thai", "boxe"]
+modalities_list.each { |t| create_modality(name: t) }
 
 Classroom.delete_all
+puts "Creating classrooms"
 create_classroom(
     name: "turma do gustavao"
 )
