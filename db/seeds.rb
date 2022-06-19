@@ -14,9 +14,9 @@ def create_modality(args)
     modality = Modality.create(args)
 end
 
-def create_user(args)
+def create_user(modality=Modality.all.sample.id, args)
     user = User.new(args)
-    modality = user.build_user_modality(modality_id: Modality.all.sample.id)
+    modality = user.build_user_modality(modality_id: modality)
 
     User.transaction do
         user.save!
@@ -42,6 +42,7 @@ modalities_list.each { |t| create_modality(name: t) }
 
 puts "Creating Users"
 create_user(
+    1,
     name: "Gustavo",
     last_name: "F",
     email: "gustavo.ferreira@gmail.com.br",
@@ -52,6 +53,7 @@ create_user(
 )
 
 create_user(
+    1,
     name: "Gustavo",
     last_name: "Ferreira",
     email: "gustavo.ferreira@injunior.com.br",
