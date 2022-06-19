@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
   post 'login', to: 'authentication#login'
   post 'signup', to: 'authentication#signup'
+  
+  resources :classrooms do
+    resources :practices, only: [:create] do
+      post 'verify_qr_code', to ['practices#verify_qr_code']
+    end
+  end
 
-  resources :classrooms
   get 'my_classrooms', to: 'classrooms#my_classrooms'
   match 'classrooms/:id/join', to: 'classrooms#join_classroom', via: [:post]
   match 'my_classrooms/:id/leave', to: 'classrooms#leave_classroom', via: [:post]
