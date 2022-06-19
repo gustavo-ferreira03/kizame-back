@@ -42,6 +42,16 @@ modalities_list.each { |t| create_modality(name: t) }
 puts "Creating Users"
 create_user(
     name: "Gustavo",
+    last_name: "F",
+    email: "gustavo.ferreira@gmail.com.br",
+    password: "123",
+    password_confirmation: "123",
+    profile_picture_link: "teste",
+    role: 0
+)
+
+create_user(
+    name: "Gustavo",
     last_name: "Ferreira",
     email: "gustavo.ferreira@injunior.com.br",
     password: "123",
