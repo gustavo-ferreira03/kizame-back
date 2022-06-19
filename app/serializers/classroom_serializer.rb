@@ -2,14 +2,15 @@ class ClassroomSerializer < ActiveModel::Serializer
   attributes :id, :name
   attribute :modality_name
   attribute :instructor_name
-  attribute :students
+  has_many :students
+  attribute :student_count
   
   def instructor_name
     "#{self.object.instructor.name} #{self.object.instructor.last_name}"
   end
 
-  def students
-    self.object.students.map { |t| t.id }
+  def student_count
+    self.object.students.count
   end
 
   def modality_name

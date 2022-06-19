@@ -48,7 +48,11 @@ class ClassroomsController < ApplicationController
   def my_classrooms
     @classrooms = current_user.classrooms
 
-    render json: @classrooms
+    if current_user.instructor? || current_user.admin?
+      render json: @classrooms, include: ['students']
+    else
+      render json: @classrooms, include: []
+    end
   end
 
   # POST /classrooms/1/join
