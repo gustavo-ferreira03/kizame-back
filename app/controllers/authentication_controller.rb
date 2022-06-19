@@ -26,7 +26,7 @@ class AuthenticationController < ApplicationController
 
   private
     def signup_user_params
-      params.require(:user).permit(:name, :last_name, :email, :password, :password_confirmation, :profile_picture_link)
+      params.require(:user).permit(:name, :last_name, :email, :password, :password_confirmation, :profile_picture)
     end
 
     def modality_id

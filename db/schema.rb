@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_19_172800) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_19_193447) do
   create_table "classroom_modalities", force: :cascade do |t|
     t.integer "modality_id", null: false
     t.integer "classroom_id", null: false
@@ -83,7 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_19_172800) do
     t.string "email"
     t.string "password"
     t.string "password_confirmation"
-    t.string "profile_picture_link"
+    t.string "profile_picture"
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
