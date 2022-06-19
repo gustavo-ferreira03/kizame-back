@@ -2,7 +2,7 @@ class PracticesController < ApplicationController
   before_action :verify_authenticated
   before_action :set_classroom
   before_action :verify_instructor, only: :create
-  before_action :verify_student, only: :verify_qr_code
+  before_action :verify_student, only: :verification
   before_action :set_practice, only: :verification
 
   def create
@@ -18,11 +18,11 @@ class PracticesController < ApplicationController
   end
 
   def verification
-    if @practice.qr_code_string == verification_params
-      current_user.practice_attendencies.create(practice_id: @practice.id)
+    if @practice.qr_code_string == verification_params && @practice.day == Date.today
+      current_user.add_practice(@practice)
       render json: current_user, include: ['practices']
     else
-      render json: { message: "Wrong QR Code" }, status: 401
+      render json: { message: "Unauthorized" }, status: 401
     end
   end
 
