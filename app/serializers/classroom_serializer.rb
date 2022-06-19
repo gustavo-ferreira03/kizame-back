@@ -1,8 +1,9 @@
 class ClassroomSerializer < ActiveModel::Serializer
   attributes :id, :name
+  has_many :students
+  has_one :schedule
   attribute :modality_name
   attribute :instructor_name
-  has_many :students
   attribute :student_count
   
   def instructor_name
