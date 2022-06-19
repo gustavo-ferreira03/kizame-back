@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   match 'classrooms/:id/join', to: 'classrooms#join_classroom', via: [:post]
   match 'my_classrooms/:id/leave', to: 'classrooms#leave_classroom', via: [:post]
   
-  resources :users
+  resources :users, except: [:create]
+  post 'create_instructor', to: 'users#create_instructor'
+  match 'profile', to: 'users#show_profile', via: [:get]
+  match 'profile', to: 'users#update_profile', via: [:put, :patch]
+
   resources :modalities, except: [:show, :update]
-
-
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
