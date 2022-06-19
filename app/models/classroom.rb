@@ -12,4 +12,15 @@ class Classroom < ApplicationRecord
     def students
         members.where(role: "student")
     end
+
+    def add_user(user)
+        members.append(user) and return true unless members.find_by(id: user.id)
+    end
+
+    def remove_user(user)
+        if members.find_by(id: user.id)
+            members.destroy(user.id)
+            return true
+        end
+    end
 end
