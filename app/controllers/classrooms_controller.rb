@@ -7,7 +7,7 @@ class ClassroomsController < ApplicationController
   # GET /classrooms
   def index
     @classrooms = current_user.admin? ? 
-      Classroom.all : user_classrooms
+      Classroom.all : available_classrooms
 
     render json: @classrooms
   end
@@ -20,7 +20,7 @@ class ClassroomsController < ApplicationController
   # POST /classrooms
   def create
     @classroom = current_user.classrooms.build(classroom_params)
-    @classroom.classroom_modality.modality_id = user_modality
+    @classroom.build_classroom_modality(modality_id: user_modality.id)
 
     if @classroom.save
       render json: @classroom, status: :created, location: @classroom
@@ -47,13 +47,15 @@ class ClassroomsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_classroom
       @classroom = current_user.admin? ? 
-        Classroom.find(params[:id]) : user_classrooms.find(params[:id])
+        Classroom.find(params[:id]) : available_classrooms.find(params[:id])
     end
 
-    def user_classrooms
-      Classroom.includes(:classroom_modality).where(
-        classroom_modality: { modality_id: current_user.modality.id }
-      )
+    def user_modality
+      current_user.modality
+    end
+
+    def available_classrooms
+      user_modality.classrooms
     end
 
     # Only allow a list of trusted parameters through.
