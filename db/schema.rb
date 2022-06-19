@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_19_052155) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_19_172800) do
   create_table "classroom_modalities", force: :cascade do |t|
     t.integer "modality_id", null: false
     t.integer "classroom_id", null: false
@@ -57,6 +57,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_19_052155) do
     t.index ["classroom_id"], name: "index_practices_on_classroom_id"
   end
 
+  create_table "schedules", force: :cascade do |t|
+    t.integer "classroom_id", null: false
+    t.integer "from_weekday"
+    t.integer "to_weekday"
+    t.time "from_time"
+    t.time "to_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classroom_id"], name: "index_schedules_on_classroom_id"
+  end
+
   create_table "user_modalities", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "modality_id", null: false
@@ -84,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_19_052155) do
   add_foreign_key "practice_attendencies", "practices"
   add_foreign_key "practice_attendencies", "users"
   add_foreign_key "practices", "classrooms"
+  add_foreign_key "schedules", "classrooms"
   add_foreign_key "user_modalities", "modalities"
   add_foreign_key "user_modalities", "users"
 end
