@@ -22,7 +22,7 @@ class PracticesController < ApplicationController
       current_user.add_practice(@practice)
       render json: current_user, include: ['practices']
     else
-      render json: { message: "Unauthorized" }, status: 401
+      render json: { message: "Invalid QR Code" }, status: 401
     end
   end
 
