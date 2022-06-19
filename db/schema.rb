@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_18_200313) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_19_043312) do
   create_table "classroom_modalities", force: :cascade do |t|
     t.integer "modality_id", null: false
     t.integer "classroom_id", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_18_200313) do
     t.date "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "qr_code_string"
   end
 
   create_table "user_modalities", force: :cascade do |t|
