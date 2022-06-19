@@ -6,9 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-User.delete_all
-Modality.delete_all
-Classroom.delete_all
+# User.delete_all
+# Modality.delete_all
+# Classroom.delete_all
 
 def create_modality(args)
     modality = Modality.create(args)
@@ -25,7 +25,8 @@ def create_user(args)
 end
 
 def create_classroom(args)
-    classroom = Classroom.new(args)
+    instructor = User.where(role: "instructor").sample
+    classroom = instructor.classrooms.build(args)
     modality = classroom.build_classroom_modality(modality_id: Modality.all.sample.id)
 
     Modality.transaction do
@@ -87,6 +88,5 @@ end
 
 puts "Creating classrooms"
 10.times do
-    instructor = User.where(role: "instructor").sample
-    instructor.classrooms.create(name: "Turma #{rand(0..300)}")
+    create_classroom(name: "Turma #{rand(0..300)}")
 end
