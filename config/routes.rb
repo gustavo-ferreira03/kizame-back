@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   resources :classrooms do
     resources :practices, only: [:create] do
-      post 'verify_qr_code', to: 'practices#verify_qr_code'
+      post 'verify_qr_code', to: 'practices#verification'
     end
   end
 
