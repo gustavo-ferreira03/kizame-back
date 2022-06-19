@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   end
 
   def update_profile
-    if @user.update(user_params)
+    if @user.update(**user_params, password_confirmation: user_params[:password])
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :last_name, :email, :password, :password_confirmation, :profile_picture)
+      params.require(:user).permit(:name, :last_name, :email, :password, :profile_picture)
     end
 
     def modality_id
