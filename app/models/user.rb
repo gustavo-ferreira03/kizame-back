@@ -19,6 +19,6 @@ class User < ApplicationRecord
     end
 
     def available_classrooms
-        modality.classrooms.filter { |t| !t.user_in_classroom?(user) }
+        modality.classrooms.filter { |t| !t.user_in_classroom?(self) }
     end
 end

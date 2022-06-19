@@ -24,13 +24,10 @@ class Classroom < ApplicationRecord
     end
 
     def add_user(user)
-        members.append(user) and return true unless members.find_by(id: user.id)
+        members.append(user) and return true unless user_in_classroom?(user)
     end
 
     def remove_user(user)
-        if members.find_by(id: user.id)
-            members.destroy(user.id)
-            return true
-        end
+        members.destroy(user.id) and return true if user_in_classroom?(user)
     end
 end

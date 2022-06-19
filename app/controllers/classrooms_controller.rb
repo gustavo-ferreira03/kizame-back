@@ -81,7 +81,7 @@ class ClassroomsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_classroom
       @classroom = current_user.admin? ? 
-        Classroom.find(params[:id]) : available_classrooms.find(params[:id])
+        Classroom.find(params[:id]) : user_modality.classrooms.find_by(id: params[:id])
     end
 
     def user_modality
@@ -89,7 +89,7 @@ class ClassroomsController < ApplicationController
     end
 
     def available_classrooms
-      user_modality.classrooms
+      current_user.available_classrooms
     end
 
     # Only allow a list of trusted parameters through.
