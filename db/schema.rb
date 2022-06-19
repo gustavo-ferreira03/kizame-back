@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_19_043312) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_19_052155) do
   create_table "classroom_modalities", force: :cascade do |t|
     t.integer "modality_id", null: false
     t.integer "classroom_id", null: false
@@ -39,11 +39,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_19_043312) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "practice_attendencies", force: :cascade do |t|
+    t.integer "practice_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["practice_id"], name: "index_practice_attendencies_on_practice_id"
+    t.index ["user_id"], name: "index_practice_attendencies_on_user_id"
+  end
+
   create_table "practices", force: :cascade do |t|
     t.date "day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "qr_code_string"
+    t.integer "classroom_id", null: false
+    t.index ["classroom_id"], name: "index_practices_on_classroom_id"
   end
 
   create_table "user_modalities", force: :cascade do |t|
@@ -70,6 +81,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_19_043312) do
 
   add_foreign_key "classroom_modalities", "classrooms"
   add_foreign_key "classroom_modalities", "modalities"
+  add_foreign_key "practice_attendencies", "practices"
+  add_foreign_key "practice_attendencies", "users"
+  add_foreign_key "practices", "classrooms"
   add_foreign_key "user_modalities", "modalities"
   add_foreign_key "user_modalities", "users"
 end
