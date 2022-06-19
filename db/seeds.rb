@@ -26,12 +26,13 @@ end
 
 def create_classroom(args)
     instructor = User.where(role: "instructor").sample
-    classroom = instructor.classrooms.build(args)
+    classroom = Classroom.new(args)
     modality = classroom.build_classroom_modality(modality_id: Modality.all.sample.id)
 
     Modality.transaction do
         classroom.save!
         modality.save!
+        classroom.members.append(instructor)
     end
 end
 
