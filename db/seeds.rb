@@ -28,10 +28,17 @@ def create_classroom(args)
     instructor = User.where(role: "instructor").sample
     classroom = Classroom.new(args)
     modality = classroom.build_classroom_modality(modality_id: Modality.all.sample.id)
+    schedule = classroom.build_schedule(
+        from_time: 12,
+        to_time: 13,
+        from_weekday: 1,
+        to_weekday: 5
+    )
 
     Modality.transaction do
         classroom.save!
         modality.save!
+        schedule.save!
         classroom.members.append(instructor)
     end
 end
