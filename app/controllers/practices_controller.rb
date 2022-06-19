@@ -18,7 +18,7 @@ class PracticesController < ApplicationController
   end
 
   def verification
-    if @practice.qr_code_string == verification_params && @practice.day == Date.today
+    if @practice.verify_qr_code(verification_params)
       current_user.add_practice(@practice)
       render json: current_user, include: ['practices']
     else
