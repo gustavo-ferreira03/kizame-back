@@ -23,7 +23,7 @@ class Schedule < ApplicationRecord
     end
 
     def in_time?
-      current_time = Time.now
+      current_time = Time.now.hour
       return (current_time >= from_time && current_time <= to_time)
     end
 end

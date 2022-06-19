@@ -5,7 +5,7 @@ class Practice < ApplicationRecord
     validates :day, presence: true
 
     def verify_qr_code(verification_params)
-        if qr_code_string == verification_params && day == Date.today
+        if qr_code_string == verification_params && day == Date.today && classroom.schedule.in_schedule?
             return true
         else
             return false
