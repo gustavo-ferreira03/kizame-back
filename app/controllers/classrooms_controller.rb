@@ -20,13 +20,17 @@ class ClassroomsController < ApplicationController
   # POST /classrooms
   def create
     @classroom = Classroom.new(classroom_params)
-    @classroom.build_classroom_modality(modality_id: user_modality.id)
-    
-    if @classroom.save
+    @schedule = @classroom.build_schedule(schedule_params)
+    @modality = @classroom.build_classroom_modality(modality_id: user_modality.id)
+
+    Classroom.transaction do
+      @classroom.save!
+      @schedule.save!
+      @modality.save!
       @classroom.members.append(current_user)
       render json: @classroom, status: :created, location: @classroom
-    else
-      render json: @classroom.errors, status: :unprocessable_entity
+    rescue ActiveRecord::RecordInvalid => invalid
+      render json: invalid.record.errors, status: :unprocessable_entity
     end
   end
 
@@ -88,12 +92,12 @@ class ClassroomsController < ApplicationController
       user_modality.classrooms
     end
 
-    def verify_user_not_in_classroom
-
-    end
-
     # Only allow a list of trusted parameters through.
     def classroom_params
       params.require(:classroom).permit(:name)
+    end
+
+    def schedule_params
+      params.require(:schedule).permit(:from_weekday, :to_weekday, :from_time, :to_time)
     end
 end
