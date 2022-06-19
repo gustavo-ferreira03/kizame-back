@@ -61,8 +61,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_19_172800) do
     t.integer "classroom_id", null: false
     t.integer "from_weekday"
     t.integer "to_weekday"
-    t.time "from_time"
-    t.time "to_time"
+    t.integer "from_time"
+    t.integer "to_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classroom_id"], name: "index_schedules_on_classroom_id"

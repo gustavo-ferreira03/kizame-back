@@ -4,8 +4,8 @@ class CreateSchedules < ActiveRecord::Migration[7.0]
       t.references :classroom, null: false, foreign_key: true
       t.integer :from_weekday
       t.integer :to_weekday
-      t.time :from_time
-      t.time :to_time
+      t.integer :from_time
+      t.integer :to_time
 
       t.timestamps
     end
