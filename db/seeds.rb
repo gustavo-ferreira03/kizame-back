@@ -55,7 +55,7 @@ create_user(
     email: "gustavo.ferreira@gmail.com.br",
     password: "123",
     password_confirmation: "123",
-    profile_picture_link: "teste",
+    profile_picture: "teste",
     role: 0
 )
 
@@ -66,7 +66,7 @@ create_user(
     email: "gustavo.ferreira@injunior.com.br",
     password: "123",
     password_confirmation: "123",
-    profile_picture_link: "teste",
+    profile_picture: "teste",
     role: 1
 )
 
@@ -76,7 +76,7 @@ create_user(
     email: "gustavo.ferreira@admin.com.br",
     password: "123",
     password_confirmation: "123",
-    profile_picture_link: "teste",
+    profile_picture: "teste",
     role: 2
 )
 
@@ -88,7 +88,7 @@ puts "  Creating students"
         email: Faker::Internet.email,
         password: "123",
         password_confirmation: "123",
-        profile_picture_link: "teste",
+        profile_picture: "teste",
         role: 0
     )
 end
@@ -101,7 +101,7 @@ puts "  Creating instructors"
         email: Faker::Internet.email,
         password: "123",
         password_confirmation: "123",
-        profile_picture_link: "teste",
+        profile_picture: "teste",
         role: 1
     )
 end

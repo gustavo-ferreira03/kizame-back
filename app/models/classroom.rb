@@ -15,7 +15,7 @@ class Classroom < ApplicationRecord
         members.where(role: "student")
     end
 
-    def user_in_classroom(user)
+    def user_in_classroom?(user)
         if students.include?(user)
             return true
         else

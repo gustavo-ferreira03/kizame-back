@@ -17,4 +17,8 @@ class User < ApplicationRecord
             practice_attendencies.create(practice_id: practice.id)
         end
     end
+
+    def available_classrooms
+        modality.classrooms.filter { |t| !t.user_in_classroom?(user) }
+    end
 end
