@@ -48,6 +48,7 @@ group :development, :test do
 end
 
 gem 'faker'
+gem "interactor", "~> 3.0"
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
